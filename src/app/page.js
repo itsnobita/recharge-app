@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import allcomments from "./const";
+import qrc from "../../qr.png"
 
 const RechargePage = () => {
   const [simOptions, setSimOptions] = useState([]);
@@ -281,7 +282,7 @@ const RechargePage = () => {
           </p>
           {qrCodeImage && (
             <img
-              src="/qr.jpg"//{qrCodeImage} // Displays the selected recharge's QR code image
+                src={ qrc}//{qrCodeImage} // Displays the selected recharge's QR code image
               alt="UPI QR Code"
               className="w-64 h-64"
             />
