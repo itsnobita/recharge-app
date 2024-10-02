@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import allcomments from "./const"
+import allcomments from "./const";
 
 const RechargePage = () => {
   const [simOptions, setSimOptions] = useState([]);
@@ -14,14 +14,15 @@ const RechargePage = () => {
   const [showQRCode, setShowQRCode] = useState(false);
   const [progress, setProgress] = useState(0);
   const [progressMessage, setProgressMessage] = useState("");
-    const [isProcessing, setIsProcessing] = useState(false);
-  const [commentCount, setCommentCount] = useState([])
-  const [qrCodeImage, setQrCodeImage] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [commentCount, setCommentCount] = useState([]);
+  const [qrCodeImage, setQrCodeImage] = useState("");
+  const [payAmount, setPayAmount] = useState(10);
 
-    useEffect(() => {
-        if (localStorage.getItem("comments")) {
-          setCommentCount(JSON.parse(localStorage.getItem("comments")))
-        } 
+  useEffect(() => {
+    if (localStorage.getItem("comments")) {
+      setCommentCount(JSON.parse(localStorage.getItem("comments")));
+    }
     fetchSimOptions();
     fetchRechargeOptions();
     fetchComments();
@@ -37,66 +38,83 @@ const RechargePage = () => {
 
   const fetchRechargeOptions = async () => {
     const data = [
-      { id: "recharge1", name: "1 month unlimited recharge a @ ₹10/-",qrCode:"" },
-      { id: "recharge2", name: "3 month unlimited recharge a @ ₹20/-" ,qrCode:"" },
-      { id: "recharge3", name: "6 month unlimited recharge a @ ₹30/-" ,qrCode:"" },
-      { id: "recharge4", name: "1 year unlimited recharge a @ ₹50/-" ,qrCode:"" },
+      {
+        id: "recharge1",
+        name: "1 month unlimited recharge a @ ₹10/-",
+        qrCode: "./IMG_E1921.JPG",
+        amout: 10,
+      },
+      {
+        id: "recharge2",
+        name: "3 month unlimited recharge a @ ₹20/-",
+        qrCode: "./IMG_E1921.JPG",
+        amount: 20,
+      },
+      {
+        id: "recharge3",
+        name: "6 month unlimited recharge a @ ₹30/-",
+        qrCode: "./IMG_E1921.JPG",
+        amount: 30,
+      },
+      {
+        id: "recharge4",
+        name: "1 year unlimited recharge a @ ₹50/-",
+        qrCode: "./IMG_E1921.JPG",
+        amount: 50,
+      },
     ];
     setRechargeOptions(data);
-    };
-    const getRandomValues=()=> {
-        const randomValues = new Set(); // Use a Set to avoid duplicates
-    
-        while (randomValues.size < 3) {
-            // Generate a random value between 0 and 748
-            const randomValue = Math.floor(Math.random() * 749);
-            randomValues.add(randomValue);
-        }
-    
-        // Convert the Set to an Array
-        return Array.from(randomValues);
+  };
+  const getRandomValues = () => {
+    const randomValues = new Set(); // Use a Set to avoid duplicates
+
+    while (randomValues.size < 3) {
+      // Generate a random value between 0 and 748
+      const randomValue = Math.floor(Math.random() * 749);
+      randomValues.add(randomValue);
     }
 
-  const fetchComments = async () => {
-    
-    
-    // Example usage
-      const randomValues = getRandomValues();
-      if (!localStorage.getItem("comments")) {
-       
-          setCommentCount(randomValues)
-          localStorage.setItem("comments",JSON.stringify(randomValues))
-      }
+    // Convert the Set to an Array
+    return Array.from(randomValues);
+  };
 
-      function getFormattedDateMinusMinutes(minutes) {
-        const now = new Date();
-        
-        // Subtract the specified minutes
-        now.setMinutes(now.getMinutes() - minutes);
-    
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutesFormatted = String(now.getMinutes()).padStart(2, '0');
-    
-        return `${year}-${month}-${day} ${hours}:${minutesFormatted}`;
-      }
-      const data = [
-          {
-          ...allcomments[randomValues[0]],
-          time:getFormattedDateMinusMinutes(randomValues[0])
+  const fetchComments = async () => {
+    // Example usage
+    const randomValues = getRandomValues();
+    if (!localStorage.getItem("comments")) {
+      setCommentCount(randomValues);
+      localStorage.setItem("comments", JSON.stringify(randomValues));
+    }
+
+    function getFormattedDateMinusMinutes(minutes) {
+      const now = new Date();
+
+      // Subtract the specified minutes
+      now.setMinutes(now.getMinutes() - minutes);
+
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+      const day = String(now.getDate()).padStart(2, "0");
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutesFormatted = String(now.getMinutes()).padStart(2, "0");
+
+      return `${year}-${month}-${day} ${hours}:${minutesFormatted}`;
+    }
+    const data = [
+      {
+        ...allcomments[randomValues[0]],
+        time: getFormattedDateMinusMinutes(randomValues[0]),
       },
-          {
-          ...allcomments[randomValues[1]],
-          time:getFormattedDateMinusMinutes(randomValues[1])
+      {
+        ...allcomments[randomValues[1]],
+        time: getFormattedDateMinusMinutes(randomValues[1]),
       },
-          {
-              ...allcomments[randomValues[2]],
-          time:getFormattedDateMinusMinutes(randomValues[2])
+      {
+        ...allcomments[randomValues[2]],
+        time: getFormattedDateMinusMinutes(randomValues[2]),
       },
-      ]
-      
+    ];
+
     setComments(data);
   };
 
@@ -110,7 +128,7 @@ const RechargePage = () => {
     setIsProcessing(true);
     setProgress(0);
     setShowQRCode(false);
-    setQrCodeImage('')
+    setQrCodeImage("");
     let steps = [
       { percent: 15, message: "Getting your info..." },
       { percent: 40, message: "Getting SIM details..." },
@@ -125,8 +143,11 @@ const RechargePage = () => {
         setProgressMessage(step.message);
         if (step.percent === 100) {
           // When progress reaches 100%, show the QR code
-          const selectedRechargeOption = rechargeOptions.find(option => option.id === selectedRecharge);
-          setQrCodeImage(selectedRechargeOption?.qrCode || '');
+          const selectedRechargeOption = rechargeOptions.find(
+            (option) => option.id === selectedRecharge
+          );
+          setPayAmount(selectedRechargeOption?.amount||10)
+          setQrCodeImage(selectedRechargeOption?.qrCode || "");
           setShowQRCode(true);
           setIsProcessing(false);
         }
@@ -141,11 +162,11 @@ const RechargePage = () => {
       text: newComment,
       time: new Date().toLocaleString(),
     };
-      setComments([...comments, newCommentData]);
-      let x = commentCount
-      let y = [x[0] + 1, ...x]
-      setCommentCount(y)
-      localStorage.setItem("comments",JSON.stringify(y))
+    setComments([...comments, newCommentData]);
+    let x = commentCount;
+    let y = [x[0] + 1, ...x];
+    setCommentCount(y);
+    localStorage.setItem("comments", JSON.stringify(y));
     setNewComment("");
     setCommenterName("");
   };
@@ -256,9 +277,9 @@ const RechargePage = () => {
       ) : (
         <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center">
           <p className="text-xl font-semibold mb-4">
-            Scan and Pay using any UPI app
-            </p>
-            {qrCodeImage && (
+            Scan and Pay {payAmount} using any UPI app
+          </p>
+          {qrCodeImage && (
             <img
               src={qrCodeImage} // Displays the selected recharge's QR code image
               alt="UPI QR Code"
@@ -270,7 +291,9 @@ const RechargePage = () => {
 
       {/* Comment Section */}
       <div className="bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Comments({commentCount[0]})</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          Comments({commentCount[0]})
+        </h2>
 
         {/* Display Comments */}
         <div className="space-y-4">
