@@ -134,7 +134,7 @@ const RechargePage = () => {
       { percent: 40, message: "Getting SIM details..." },
       { percent: 65, message: "Generating QR code..." },
       { percent: 90, message: "Pay and get recharge..." },
-      { percent: 190, message: "Pay and get recharge..." },
+      { percent: 100, message: "Pay and get recharge..." },
     ];
 
     steps.forEach((step, index) => {
