@@ -281,7 +281,7 @@ const RechargePage = () => {
           </p>
           {qrCodeImage && (
             <img
-              src="@/qr.jpg"//{qrCodeImage} // Displays the selected recharge's QR code image
+              src="/qr.jpg"//{qrCodeImage} // Displays the selected recharge's QR code image
               alt="UPI QR Code"
               className="w-64 h-64"
             />
