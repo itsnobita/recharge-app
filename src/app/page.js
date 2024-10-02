@@ -120,7 +120,8 @@ const RechargePage = () => {
   };
 
   const handleRecharge = () => {
-    if (!selectedSim || !selectedRecharge || !phoneNumber) {
+    const regex = /^(?:\+91|91|0)?[56789]\d{9}$/;
+    if (!selectedSim || !selectedRecharge || !phoneNumber || regex.test(phoneNumber)) {
       //   alert("Please fill out all the fields before proceeding.");
       return;
     }
