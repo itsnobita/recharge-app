@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import allcomments from "./const";
-import qrc from "../../qr.png"
+// import qrc from "../../qr.png"
 
 const RechargePage = () => {
   const [simOptions, setSimOptions] = useState([]);
@@ -120,7 +120,7 @@ const RechargePage = () => {
   };
 
   const handleRecharge = () => {
-    const regex = /^(?:\+91|91|0)?[56789]\d{9}$/;
+    const regex = /d{10}$/;
     if (!selectedSim || !selectedRecharge || !phoneNumber || regex.test(phoneNumber)) {
       //   alert("Please fill out all the fields before proceeding.");
       return;
@@ -283,7 +283,7 @@ const RechargePage = () => {
           </p>
           {qrCodeImage && (
             <img
-                src={ qrc}//{qrCodeImage} // Displays the selected recharge's QR code image
+                src="/qr.png"//{qrCodeImage} // Displays the selected recharge's QR code image
               alt="UPI QR Code"
               className="w-64 h-64"
             />
